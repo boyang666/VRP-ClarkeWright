@@ -2,17 +2,31 @@ package com.polytechtours.vrp.test;
 
 import java.util.ArrayList;
 
-import com.polytechtours.vrp.cw.ClarkeWhite;
+import com.polytechtours.vrp.cw.ClarkeWright;
 import com.polytechtours.vrp.cw.Saving;
 import com.polytechtours.vrp.cw.VRPSolution;
-import com.polytechtours.vrp.data.ArrayDemands;
-import com.polytechtours.vrp.data.ArrayDistanceMatrix;
 import com.polytechtours.vrp.util.EuclideanCalculator;
+import com.polytechtours.vrp.data.*;
 
 public class CWTest {
 	
 	public static void main(String[] args){
-		
+		test();
+	}
+	
+	public static void test(){
+		String path = "data/CMT/CMT01.xml";
+		@SuppressWarnings("resource")
+		VRPREPInstanceReader reader = new VRPREPInstanceReader(path);
+		IDistanceMatrix distances = reader.getDistanceMatrix();
+		IDemands demands = reader.getDemands();
+		double capacity = reader.getCapacity("0");
+		ClarkeWright cw = new ClarkeWright(distances, demands, capacity);
+		VRPSolution solution = (VRPSolution) cw.run();
+		System.out.println(solution.toString());
+	}
+	
+	public static void test0(){
 		double[][] coor  = new double[9][2];
 		coor[0][0] = 40;
 		coor[0][1] = 40;
@@ -43,7 +57,7 @@ public class CWTest {
 		double[] arrDemands = {0, 18, 26, 11, 30, 21, 16, 29, 37};
 		ArrayDemands demands = new ArrayDemands(arrDemands);
 		
-		ClarkeWhite cw = new ClarkeWhite(distances, demands, 100);
+		ClarkeWright cw = new ClarkeWright(distances, demands, 100);
 		VRPSolution solution = (VRPSolution) cw.run();
 		System.out.println(solution.toString());
 	}

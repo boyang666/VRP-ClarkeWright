@@ -6,8 +6,9 @@ import java.util.List;
 /**
  * Models a VRP solution
  * @author Jorge E. Mendoza (dev@jorge-mendoza.com)
+ * @author Boyang Wang
  * @version %I%, %G%
- * @since Jan 21, 2016
+ * @since Mars 10, 2018
  *
  */
 public class VRPSolution implements ISolution {
@@ -238,6 +239,11 @@ public class VRPSolution implements ISolution {
 		return clone;
 	}
 	
+	/**
+	 * to verify if the current node is already included in one existing route
+	 * @param nodeId
+	 * @return true if the node exists
+	 */
 	public boolean containsNode(int nodeId){
 		boolean exist = false;
 		for(int i=0; i<this.routes.size(); i++){
@@ -250,6 +256,11 @@ public class VRPSolution implements ISolution {
 		return exist;
 	}
 	
+	/**
+	 * to get the id of route which contains the node we look for
+	 * @param nodeId
+	 * @return the route id with the node, -1 if not found
+	 */
 	public int getRouteIdByNodeId(int nodeId){
 		for(int i=0; i<routes.size(); i++){
 			if(routes.get(i).contains(nodeId)){
@@ -259,6 +270,10 @@ public class VRPSolution implements ISolution {
 		return -1;
 	}
 	
+	/**
+	 * to reverse one certain route in the solution
+	 * @param r id of route to reverse
+	 */
 	public void reverse(int r){
 		this.routes.get(r).reverse();
 	}

@@ -2,18 +2,44 @@ package com.polytechtours.vrp.cw;
 
 import java.util.ArrayList;
 
-import com.polytechtours.vrp.data.ArrayDistanceMatrix;
 import com.polytechtours.vrp.data.IDistanceMatrix;
-import com.polytechtours.vrp.util.EuclideanCalculator;
 
+/**
+ * A saving object is constructed by three variables: </br>
+ * <ul>
+ * <li>id of first node</li>
+ * <li>id of second node</li>
+ * <li>saving calculated by using Di + Dj - ij (D as Depot)</li>
+ * </ul>
+ * A saving indicates the distance saved when we combine these two nodes in one tour
+ * 
+ * @author Boyang Wang
+ * @version %I%, %G%
+ * @since Mars 13, 2018
+ *
+ */
 public class Saving implements Comparable<Saving>{
 
+	/**
+	 * id of first node
+	 */
 	private int sourceId;
-	
+	/**
+	 * id od second node
+	 */
 	private int targetId;
-	
+	/**
+	 * saving calculated 
+	 */
 	private double saving;
 	
+	/**
+	 * Function to calculate a list of savings </br>
+	 * By using the matrix of distance in form of {@link IDistanceMatrix}
+	 * 
+	 * @param distances
+	 * @return list of savings
+	 */
 	public static ArrayList<Saving> calc(IDistanceMatrix distances){
 		
 		// initialize the saving list
@@ -58,35 +84,6 @@ public class Saving implements Comparable<Saving>{
 
 	public void setSaving(double saving) {
 		this.saving = saving;
-	}
-	
-	public static void main(String[] args){
-		double[][] coor  = new double[9][2];
-		coor[0][0] = 40;
-		coor[0][1] = 40;
-		coor[1][0] = 22;
-		coor[1][1] = 22;
-		coor[2][0] = 36;
-		coor[2][1] = 26;
-		coor[3][0] = 21;
-		coor[3][1] = 45;
-		coor[4][0] = 45;
-		coor[4][1] = 35;
-		coor[5][0] = 55;
-		coor[5][1] = 20;
-		coor[6][0] = 55;
-		coor[6][1] = 45;
-		coor[7][0] = 26;
-		coor[7][1] = 59;
-		coor[8][0] = 55;
-		coor[8][1] = 65;
-		
-		ArrayDistanceMatrix distances = new ArrayDistanceMatrix(EuclideanCalculator.calc(coor));
-		ArrayList<Saving> savings = Saving.calc(distances);
-		java.util.Collections.sort(savings);
-		for(int i=0; i<savings.size(); i++){
-			System.out.println(savings.get(i).getSaving());
-		}
 	}
 
 	@Override
